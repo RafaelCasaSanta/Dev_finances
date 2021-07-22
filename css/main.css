@@ -1,0 +1,72 @@
+/* Global*/
+
+:root{
+    --color-dark:#363f5f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f0f2f5;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  width: min(90vw, 800px);
+
+  margin: auto;
+}
+/* Titles*/
+
+h2 {
+  margin-top: 3.2rem;
+  margin-bottom: 0.8rem;
+  color:var(--color-dark);
+
+  font-weight: 400;
+}
+
+/* HEADER */
+
+header {
+  background: #2d4a22;
+  padding: 2rem 0 10rem;
+  text-align: center;
+}
+
+header h1 {
+  color: #fff;
+
+  font-weight: 100;
+}
+
+/* balance*/
+
+#balance {
+  margin-top: -8rem;
+}
+
+#balance h2 {
+  color: #fff;
+  margin-top: 0;
+}
+
+
+/*CARDS*/
+
+.card {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 0.25rem;
+
+  margin-bottom: 2rem;
+}
+
+/*  Footer */
+footer {
+  text-align: center;
+}
