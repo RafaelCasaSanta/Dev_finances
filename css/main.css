@@ -93,6 +93,10 @@ button:hover {
   opacity: 1;
 }
 
+img{
+  cursor: pointer;
+}
+
 /*!Titles*/
 
 h2 {
