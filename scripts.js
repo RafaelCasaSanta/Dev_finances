@@ -1,3 +1,5 @@
+
+//!Construção do Modal
 const Modal = {
     open() {
         document.querySelector(".modal-overlay").classList.add("active");
@@ -7,12 +9,11 @@ const Modal = {
     },
 };
 
-//Armazenamento dos itens 
+//!Armazenamento dos itens 
 const Storage = {
     get() {
         return JSON.parse(localStorage.getItem("dev.finances:transactions")) ||
             []
-
     },
 
     set(transactions) {
@@ -20,15 +21,12 @@ const Storage = {
     }
 };
 
-
-//Preciso somar as entradas
-//depois somar as saidas
-//remover das entradas o valor das saidas
-//assim teremos o resultado final
+//!Regras de negócio do Transaction
 const Transaction = {
     //Criando um atalho
     all: Storage.get(),
 
+    //Adicionar uma transação a tela
     add(transaction) {
         Transaction.all.push(transaction);
 
@@ -72,6 +70,7 @@ const Transaction = {
     },
 };
 
+//!Substituir os dados do html,
 const DOM = {
     transactionsContainer: document.querySelector("#data-table tbody"),
 
@@ -101,8 +100,8 @@ const DOM = {
       `;
         return html;
     },
-
     //Trabalha com a funcionalidade de uplodar os valores na tela
+    //FORMATAÇÃO NA TELA WORKING
     updateBalance() {
         document.getElementById("incomeDisplay").innerHTML = Utils.formatCurrency(
             Transaction.incomes()
@@ -120,11 +119,11 @@ const DOM = {
     },
 };
 
-//Formatação dos conteudos.
+//!Formatação dos conteudos.
 const Utils = {
     formatAmount(value) {
-        value = Number(value) * 100;
-        return value;
+        value = value * 100;
+        return Math.round(value);
     },
     formatDate(date) {
         const splittedDate = date.split("-");
@@ -146,7 +145,7 @@ const Utils = {
     },
 };
 
-//Todas as funcionalidades do Formulario
+//!Todas as funcionalidades do Formulario para captura dos dados.
 const Form = {
     description: document.querySelector("input#description"),
     amount: document.querySelector("input#amount"),
@@ -185,6 +184,9 @@ const Form = {
         };
     },
 
+    
+          
+    
     clearFields() {
         Form.description.value = "";
         Form.amount.value = "";
@@ -200,7 +202,7 @@ const Form = {
             //Formatar os dados para salvar.
             const transaction = Form.formatValues();
             //Salvar
-            Transaction.add(transaction);
+            Transaction.add(transaction)
             //Apagar dados do formulario
             Form.clearFields();
             //Modal feche
@@ -211,12 +213,11 @@ const Form = {
     },
 };
 
-
+//!Execução do programa
 const App = {
     init() {
         //Para cada transação que tem dentro das transações, roda uma funcionalidade.
         Transaction.all.forEach(DOM.addTransaction);
-
         //Atualizando os cartões
         DOM.updateBalance();
         //Atualizando o local storage
@@ -229,31 +230,3 @@ const App = {
 };
 
 App.init();
-
-
-
-
-
-/* [
-    {
-      description: "Luz",
-      amount: -50000,
-      date: "21/01/2021",
-    },
-    {
-      description: "Criação de website",
-      amount: 200000,
-      date: "20/01/2021",
-    },
-    {
-      description: "Internet",
-      amount: -22000,
-      date: "10/01/2021",
-    },
-    {
-      description: "App",
-      amount: 200000,
-      date: "10/01/2021",
-    },
-  ],
- */
