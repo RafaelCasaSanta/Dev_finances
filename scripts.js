@@ -1,3 +1,8 @@
+//Tema
+let darkMode = localStorage.getItem("darkMode");
+
+
+
 
 //!Construção do Modal
 const Modal = {
@@ -19,6 +24,33 @@ const Storage = {
     set(transactions) {
         localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
     }
+};
+
+const Theme = {
+    enable() {
+        document.body.classList.add("darkmode");
+        localStorage.setItem("darkMode", "enabled");
+        document.getElementById("theme_icon").src = "./assets/theme-dark.svg";
+        //document.querySelector(".background").src = "./assets/background-shape-dark.svg";
+        //ocument.querySelector(".svg-down").src = "./assets/down-dark.svg";
+    },
+
+    disable() {
+        document.body.classList.remove("darkmode");
+        localStorage.setItem("darkMode", "null");
+        document.getElementById("theme_icon").src = "./assets/theme-light.svg";
+        //document.querySelector(".svg-down").src = "./assets/down";
+    },
+
+    click() {
+        let darkMode = localStorage.getItem("darkMode");
+
+        if (darkMode !== "enabled") {
+            this.enable();
+        } else{
+            this.disable();
+        }
+    },
 };
 
 //!Regras de negócio do Transaction
@@ -184,9 +216,9 @@ const Form = {
         };
     },
 
-    
-          
-    
+
+
+
     clearFields() {
         Form.description.value = "";
         Form.amount.value = "";
@@ -222,6 +254,15 @@ const App = {
         DOM.updateBalance();
         //Atualizando o local storage
         Storage.set(Transaction.all)
+
+
+//Theme
+if(darkMode === "enabled"){
+    Theme.enable();
+    document.getElementById("theme_icon").src = "./assets/theme-dark.svg";
+}
+
+
     },
     reload() {
         DOM.clearTransactions();

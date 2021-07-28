@@ -13,6 +13,9 @@
 <body>
   <header>
     <img src="./assets/logo.svg" alt="Logo dev Finance" />
+    <button class="whiteButton" type="button" id="btn_theme" onclick="Theme.click()">
+      <img src="./assets/theme-light.svg" alt="light mode" id="theme_icon" />
+    </button>
   </header>
 
   <main class="container">
@@ -41,17 +44,14 @@
         </h3>
         <p id="totalDisplay">R$ 0,00</p>
       </div>
-
-
     </section>
 
     <section id="transaction">
       <h2 class="sr-only">Transações</h2>
 
-      
       <a href="#" class="button new" onclick="Modal.open()">
-      <img id="dollar" src="./assets/save-money.svg" alt="dollar">
-    </a>
+        <img id="dollar" src="./assets/save-money.svg" alt="dollar" />
+      </a>
       <table id="data-table">
         <thead>
           <tr>
@@ -90,7 +90,7 @@
 
           <div class="input-group actions">
             <a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
-            <button>Salvar</button>
+            <button class="salvar">Salvar</button>
           </div>
         </form>
       </div>
@@ -98,15 +98,20 @@
   </div>
 
   <footer>
-    <a href="https://github.com/RafaelCasaSanta">
-      <img class="socialMedia" src="assets/github.svg" alt="GitHub">
-    </a>
-    <a href="https://www.linkedin.com/in/rafael-casa-santa-b02062191">
-      <img class="socialMedia" src="/assets/linkedin.svg" alt="LinkedIn">
-    </a>
-    <p>2021 - dev.Finance$</p>
+    
+    
+    
+    <a href="https://github.com/RafaelCasaSanta"><img class="socialMedia" src="assets/github.svg"
+      alt="GitHub" /></a>
+      
+      
+      <a href="https://www.linkedin.com/in/rafael-casa-santa-b02062191">
+        <img class="socialMedia" src="/assets/linkedin.svg" alt="LinkedIn" />
+      </a>
+      
+      <p>2021 - dev.Finance$</p>
+    
   </footer>
 </body>
 <script src="./scripts.js"></script>
 
-</html>

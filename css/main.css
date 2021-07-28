@@ -1,10 +1,48 @@
 /*!Global*/
 
 :root {
-  --dark-blue: #363f5f;
+ /*  --dark-blue: #363f5f;
   --green: #49aa26;
   --light-green: #3dd705;
   --red: #e92929;
+  */
+  
+  --dark-blue: #000000;
+  --containers: #fff;
+  --green: #27ae60;
+  --red: #eb3c3c;
+  --primary: #ee714c;
+  --background: lightgrey;
+  --th: #fff;
+  --td: #f9f9f9;
+  --text-td: #ee714c;
+  --text-desc: #909090;
+  --card-large-sub: #5f5f5f;
+  --card-large-title: #000000;
+  --new-transaction: #ee714c;
+  --title-cards: #5f5f5f;
+  --text-total-value: #fff;
+  --footer-text: #0b0b0b;
+}
+
+
+.darkmode {
+  --containers: #2e2e2e;
+  --dark-blue: #000000;
+  --green: #1d1d1d;
+  --red: #eb3c3c;
+  --primary: #0b0b0b;
+  --background: #181818;
+  --th: #0f0f0f;
+  --td: #1d1d1d;
+  --text-td: #ee714c;
+  --text-desc: #909090;
+  --card-large-sub: #d1b5b5;
+  --card-large-title: #ee714c;
+  --new-transaction: #ee714c;
+  --title-cards: #ee714c;
+  --text-total-value: #27ae60;
+  --footer-text: #fff;
 }
 
 * {
@@ -18,7 +56,7 @@ html {
 }
 
 body {
-  background: lightgray;
+  background: var(--background);
   font-family: "Encode Sans SC", sans-serif;
 }
 
@@ -67,8 +105,7 @@ button {
   border: none;
 
   color: white;
-  background: var(--green);
-
+ 
   padding: 1;
 
   border-radius: 0.25rem;
@@ -76,9 +113,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: var(--light-green);
-}
 
 .button.new {
   display: inline-block;
@@ -89,13 +123,13 @@ button:hover {
   color: var(--red);
   border: 2px var(--red) solid;
   border-radius: 0.25rem;
-
+  
   height: 50px;
-
+  
   display: flex;
   align-items: center;
   justify-content: center;
-
+  
   opacity: 0.6;
 }
 
@@ -103,10 +137,36 @@ button:hover {
   opacity: 1;
 }
 
+button.salvar{
+  background: var(--green);
+  opacity:  0.8;
+}
+button.salvar{
+  opacity: 1;
+}
+
 img{
   cursor: pointer;
 }
 
+#btn_theme {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2%;
+}
+
+
+.whiteButton{
+ background-color: blue
+ 
+}
+.whiteButton:hover{
+  background-color:blue
+}
 
 /*!Titles*/
 
@@ -138,28 +198,37 @@ header {
 }
 
 #balance h2 {
-  color: white;
+  color: var(--color-primary);
   margin-top: 0;
 }
 
 /*!CARDS*/
 
+
+
 .card {
-  background: white;
+  background: var(--containers);
   padding: 1.5rem 2rem;
   border-radius: 0.25rem;
 
   margin-bottom: 2rem;
-  color: var(--dark-blue);
+  
 }
 
 .card h3 {
   font-weight: normal;
   font-size: 1rem;
-
+  color: var(--title-cards);
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+
+.card h3 .title{
+  font-size: 13px;
+  color: var(--title-cards);
+  margin-right: 5px;
 }
 
 .card p {
@@ -198,8 +267,8 @@ table tbody tr td:last-child {
 }
 
 table thead th {
-  background: white;
-  color: black;
+  background: var(--th);
+  color: var(--text-td);
   font-weight: normal;
   padding: 1rem 2rem;
   text-align: left;
@@ -212,14 +281,14 @@ table tr {
 table tbody tr:hover {
   opacity: 1;
 }
-table td {
-  background: white;
+table tbody td {
+  background: var(--td);
 
   padding: 1rem 2rem;
 }
 
 td.description {
-  color: var(--dark-blue);
+  color: var(--text-desc);
 }
 
 td.income {
@@ -256,7 +325,7 @@ td.expense {
 }
 
 .modal {
-  background: lightgray;
+  background: #f0f2f5;
   padding: 2.4rem;
 
   position: relative;
@@ -274,7 +343,7 @@ td.expense {
 }
 
 input {
-  border: none;
+  border: 0.5px #9c9c9c solid;
   border-radius: 0.2rem;
 
   padding: 0.8rem;
@@ -307,9 +376,21 @@ footer {
   text-align: center;
   padding: 4rem 0 2rem;
 
-  color: var(--color-dark-blue);
-  opacity: 0.6;
+  color: var(--footer-text);
+
+  display: revert;
+  flex-direction: row;
+  justify-content: center;
+
+  margin: 10rem;
+
 }
+
+
+
+
+
+
 
 /*!Responsive */
 
@@ -326,11 +407,15 @@ footer {
 }
 
 .socialMedia{
-  width: 2rem;
-  height: 2rem;
+   width: 3rem;
+  height: 3rem;
   margin: 1rem 2rem 1rem;
   opacity: 0.8;
+  
+  transition: transform 0.1s ease;
 }
+
 .socialMedia:hover{
-opacity: 5;
+  opacity: 2;
+  transform: translateY(-5px);
 }
