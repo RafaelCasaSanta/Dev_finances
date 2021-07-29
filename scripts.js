@@ -22,10 +22,11 @@ const Storage = {
     },
 
     set(transactions) {
-        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+        localStorage.setItem(
+            "dev.finances:transactions", JSON.stringify(transactions))
     }
 };
-
+//!Dark Theme 
 const Theme = {
     enable() {
         document.body.classList.add("darkmode");
@@ -47,7 +48,7 @@ const Theme = {
 
         if (darkMode !== "enabled") {
             this.enable();
-        } else{
+        } else {
             this.disable();
         }
     },
@@ -123,6 +124,7 @@ const DOM = {
         const html = `
        
         <td class="description">${transaction.description}</td>
+        <td class="quantity">${transaction.quantity}</td>
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
@@ -180,37 +182,43 @@ const Utils = {
 //!Todas as funcionalidades do Formulario para captura dos dados.
 const Form = {
     description: document.querySelector("input#description"),
+    quantity: document.querySelector("input#quantity"),
     amount: document.querySelector("input#amount"),
     date: document.querySelector("input#date"),
 
     getValues() {
         return {
             description: Form.description.value,
+            quantity: Form.quantity.value,
             amount: Form.amount.value,
             date: Form.date.value,
         };
     },
 
     validateFields() {
-        const { description, amount, date } = Form.getValues();
+        const { description, amount, date, quantity } = Form.getValues();
 
         if (
             description.trim() === "" ||
+            quantity.trim() ==="" || 
             amount.trim() === "" ||
-            date.trim() === ""
+            date.trim() === "" 
         ) {
             throw new Error("Por favor, preencha todos os campos");
         }
     },
     formatValues() {
-        let { description, amount, date } = Form.getValues();
+        let { description, amount, date, quantity } = Form.getValues();
 
         amount = Utils.formatAmount(amount);
 
         date = Utils.formatDate(date);
+        
+        
 
         return {
             description,
+            quantity,
             amount,
             date,
         };
@@ -256,17 +264,94 @@ const App = {
         Storage.set(Transaction.all)
 
 
-//Theme
-if(darkMode === "enabled"){
-    Theme.enable();
-    document.getElementById("theme_icon").src = "./assets/theme-dark.svg";
-}
+        //Theme
+        if (darkMode === "enabled") {
+            Theme.enable();
+            document.getElementById("theme_icon").src = "./assets/theme-dark.svg";
+        }
 
 
     },
     reload() {
         DOM.clearTransactions();
         App.init();
+    },
+};
+
+const Csv = {
+
+    exportCSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        var jsonObject = JSON.stringify(items);
+
+        var csv = Csv.convertToCSV(jsonObject);
+
+        var exportedFilename = fileTitle + ".csv" || "export.csv";
+
+
+        var blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+        if (navigator.msSaveBlob) {
+            navigator.msSaveBlob(blob, exportedFilename);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilename);
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    },
+    convertToCSV(objArray) {
+        var array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+        var str = "";
+         
+        for(var i = 0; i < array.length; i++) {
+            var line = "";
+            for(var index in array[i]){
+                if(line != "") line += ",";
+
+                line += array[i][index];
+            }
+            str += line + "\r\n";
+        }
+      return str;
+    },
+
+    download() {
+        var headers = {
+            description: "Nome".replace(/,/g, ""),
+            quantity: "Quantidade",
+            amount: "Valor",
+            date: "Data",
+        };
+
+        itemsNotFormatted = Storage.get();
+
+        var itemsFormatted = [];
+
+
+     itemsNotFormatted.forEach((item) => {
+         itemsFormatted.push({
+             description: item.description,
+             quantity: item.quantity,
+          amount: `R$ ${item.amount}`,
+          date: item.date,
+
+       });
+
+
+     });
+   var fileTitle = "Minhas Transações - DevFinances";
+
+   Csv.exportCSVFile(headers, itemsFormatted, fileTitle);
+
     },
 };
 
