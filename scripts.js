@@ -26,6 +26,7 @@ const Storage = {
             "dev.finances:transactions", JSON.stringify(transactions))
     }
 };
+
 //!Dark Theme 
 const Theme = {
     enable() {
@@ -67,7 +68,8 @@ const Transaction = {
     },
 
     remove(index) {
-        Transaction.all.splice(index, 1);
+        
+        Transaction.all.splice(index, 1)
 
         App.reload();
     },
@@ -105,7 +107,7 @@ const Transaction = {
 
 //!Substituir os dados do html,
 const DOM = {
-    transactionsContainer: document.querySelector("#data-table tbody"),
+    transactionsContainer: document.querySelector(".data-table tbody"),
 
     addTransaction(transaction, index) {
         const tr = document.createElement("tr");
@@ -122,16 +124,18 @@ const DOM = {
         const amount = Utils.formatCurrency(transaction.amount);
 
         const html = `
-       
+
         <td class="description">${transaction.description}</td>
         <td class="quantity">${transaction.quantity}</td>
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
-          <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação" />
+            <button class="exclude-transation-item">
+                <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação" />
+            </button>
         </td>
-      
-      `;
+    
+    `;
         return html;
     },
     //Trabalha com a funcionalidade de uplodar os valores na tela
@@ -311,17 +315,21 @@ const Csv = {
     convertToCSV(objArray) {
         var array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
         var str = "";
-         
+
         for(var i = 0; i < array.length; i++) {
             var line = "";
+
             for(var index in array[i]){
-                if(line != "") line += ",";
+                if(line != "") line += ";";
 
                 line += array[i][index];
+            
             }
             str += line + "\r\n";
+
         }
-      return str;
+
+        return str;
     },
 
     download() {
@@ -337,20 +345,20 @@ const Csv = {
         var itemsFormatted = [];
 
 
-     itemsNotFormatted.forEach((item) => {
-         itemsFormatted.push({
-             description: item.description,
-             quantity: item.quantity,
-          amount: `R$ ${item.amount}`,
-          date: item.date,
+        itemsNotFormatted.forEach((item) => {
+        itemsFormatted.push({
+            description: item.description,
+            quantity: item.quantity,
+            amount: `R$ ${item.amount} `,
+            date: item.date,
 
-       });
+        });
 
 
-     });
-   var fileTitle = "Minhas Transações - DevFinances";
+        });
+    var fileTitle = "Minhas Transações - DevFinances";
 
-   Csv.exportCSVFile(headers, itemsFormatted, fileTitle);
+    Csv.exportCSVFile(headers, itemsFormatted, fileTitle);
 
     },
 };
